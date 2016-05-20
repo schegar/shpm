@@ -1,0 +1,5 @@
+/.settings
+/.idea
+.buildpath
+.project
+config.inc.php

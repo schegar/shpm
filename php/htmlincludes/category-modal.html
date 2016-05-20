@@ -1,0 +1,96 @@
+<div class="modal fade category-modal" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Add Category</h4>
+            </div>
+            <div class="modal-body">
+                <form id="category-form" action="datahandler.php" enctype="multipart/form-data" method="post">
+                        <div class="form-group">
+                            <label for="category" class="control-label">Category Name</label>
+                            <input type="text" class="form-control" name="category" id="category">
+                        </div>
+                        <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-primary btn-file">
+                                Category Icon<input name="file" type="file" id="file">
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="addCategory">Add Category</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    jQuery(function(){
+    	
+    	var files;
+
+    	// Add events
+    	$('input[type=file]').on('change', prepareUpload);
+
+    	// Grab the files and set them to our variable
+    	function prepareUpload(event)
+    	{
+    	  files = event.target.files;
+    	}
+    	
+    	$("#addCategory").on("click", uploadFiles);
+
+    	// Catch the form submit and upload the files
+    	function uploadFiles(event)
+    	{
+    		$('#categoryModal').modal('hide');
+    	  	event.stopPropagation(); // Stop stuff happening
+    	    event.preventDefault(); // Totally stop stuff happening
+
+    	    // START A LOADING SPINNER HERE
+
+    	    // Create a formdata object and add the files
+    	    var data = new FormData();
+    	    $.each(files, function(key, value)
+    	    {
+    	        data.append(key, value);
+    	    });
+    	    data.append('type', 'category');
+    	    data.append('name', $('#category').val());
+
+    	    $.ajax({
+    	        url: 'php/datahandler.php',
+    	        type: 'POST',
+    	        data: data,
+    	        cache: false,
+    	        dataType: 'json',
+    	        processData: false, // Don't process the files
+    	        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+    	    });
+    	}
+    	
+    	
+    	
+        /*$("#addCategory").click(function() {
+            var data = {}
+            console.log($("#file").val());
+            $.ajax({
+                method: "POST",
+                url: "php/datahandler.php",
+                data: {
+                    type: "category",
+                    name: $("#category").val()
+                }
+            });
+        });*/
+    });
+
+
+
+</script>

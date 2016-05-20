@@ -1,0 +1,8 @@
+<?php
+
+    $DB_HOST = 'localhost';
+    $DB_NAME = 'shpm';
+    $DB_USER = 'root';
+    $DB_PASS = '';
+
+?>

@@ -1,0 +1,55 @@
+<div class="modal fade import-account-modal" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Import</h4>
+            </div>
+            <div class="modal-body">
+                <form id="import-form" action="php/parser.php" enctype="multipart/form-data" method="post">
+                    <!--<form action="php/lib/spreadsheet-reader/test.php" method="post">-->
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-primary btn-file">
+                                Browse&hellip; <input name="file" type="file">
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="import">Import</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    jQuery(function(){
+        $("#import").click(function(){
+            var action = $("#import-form").attr('action') + "?category=" + getUrlParameter('category');
+            $("#import-form").attr('action', action);
+            //console.log();
+            $("#import-form").submit();
+        });
+    });
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+</script>
